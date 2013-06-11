@@ -100,7 +100,13 @@ MESSAGE
         }
 
         row = MassiveRecord::Wrapper::Row.new
-        row.id = SecureRandom.uuid
+
+        if not @include_time_key or not @include_tag_key
+          row.id = SecureRandom.uuid
+        else
+          row.id = row_values[@mapping[@tag_key]].to_s + "_" + row_values[@mapping[@time_key]].to_s
+        end
+
         row.values = event
         row.table = @table
         row.save
