@@ -96,7 +96,7 @@ MESSAGE
         row_values.each {|column_family_and_column, value|
           column_family, column = column_family_and_column.split(":")
 
-          (event[column_family.intern] ||= {}).update({column => value})
+          (event[column_family.intern] ||= {}).update({column => value.to_s})
         }
 
         row = MassiveRecord::Wrapper::Row.new
